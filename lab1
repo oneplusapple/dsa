@@ -1,52 +1,42 @@
-#include<stdio.h>
+#include <stdio.h>
 int i,n;
-struct emp
+struct EMP
 {
-	char emp_name[20];
-	int emp_number,basic;
-	float gross,net_salary,all_allowances,it;
-}e[50];
-void Reddata(){
-	printf("Enter the many emp?");
+	char Employee_Name[20];
+	int Employee_Number,Basic_Salary;
+	float gross,Net_Salary,All_Allowances,IT;
+}e[5];
+void Readdata() 
+{
+	printf("Enter the number of employee");
 	scanf("%d",&n);
-	printf("Enter the employee details \n");
-	for(i=0;i<n;i++)
-	{
-		printf("Enter the employee name \n ");
-		scanf("%s",&e[i].emp_name);
-		printf("Enter the employee number \n");
-		scanf("%d",&e[i].emp_number);
-		printf("Enter the employee basic salary \n ");
-		scanf("%d",&e[i].basic);
-		printf("\n");
+	printf("\nemployee name \tEMP Num\t Basic sal\n");
+	for(i=0;i<n;i++){
+		scanf("%s%d%f",e[i].Employee_Name,&e[i].Employee_Number,&e[i].Basic_Salary);
 	}
 }
-void calculate(){
+void calculate()
+{
 	for(i=0;i<n;i++)
 	{
-		e[i].all_allowances=1.23*e[i].basic;
-		e[i].gross=e[i].basic+e[i].all_allowances;
-		e[i].it=0.3*e[i].gross;
-		e[i].net_salary=e[i].gross=e[i].it;
+		e[i].All_Allowances=1.23*e[i].Basic_Salary;
+		e[i].gross=e[i].Basic_Salary+e[i].All_Allowances;
+		e[i].IT=0.3*e[i].gross;
+	    e[i].Net_Salary=e[i].gross-e[i].IT;
     }
 }
-void Display(){
-	printf("\n employee detals are \n");
-	for(i=0;i<n;i++)
-	{
-		printf("name of the employee %s\n",e[i].emp_name);
-		printf("number of the employee %d\n",e[i].emp_number);
-		printf("basic_salary of the employee%f\n",e[i].basic);
-		printf("gross of the employee %f\n",e[i].gross);
-		printf("net_salary of the employee %f\n",e[i].net_salary);
-		printf("all_allowances of the employee %f\n",e[i].all_allowances);
-		printf("it of the employee %f\n",e[i].it);
-		printf("\n");
-	}
+void Displaydata()
+{
+	printf("Employee Details are:\n");
+	printf("Employee Name \tEMP Num\t Basic sal\t basic gross\t net_salary \t all_allowances\t IT\n");
+	for(i=0;i<n;i++){
+		printf("%s\t%d\t%d\t%f\t%f\t%f\t%f\n",e[i].Employee_Name,e[i].Employee_Number,e[i].Basic_Salary,e[i].Net_Salary,e[i].All_Allowances,e[i].IT);
+	}	
 }
-int main(){
-	Reddata();
+int main()
+{
+	Readdata();
 	calculate();
-	Display();
-	return(0);
+	Displaydata();
+	return 0;
 }
