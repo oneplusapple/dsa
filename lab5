@@ -1,63 +1,71 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <ctype.h>
-#define size 10
-char cirq[size];
-int f=0,r=-1,n=7,count=0,i;
-void push(){
-	char ele;
-	if(count>size-1){
-		printf("\n the queue is full");
+#include<stdio.h>
+#include<stdlib.h>
+#define size 7
+char cq[size];
+int r=-1,f=0,cnt=0;
+void cq_insert()
+{
+	if(cnt==size)
+	{
+		printf("Cq is full\n");
+		return; 
 	}
-	else{
-		count++;
-	r=(r+1)%n;
-	printf("\nenter the element");
-	scanf("%s",&ele);
-	cirq[r]=ele;
+	printf("Enter the Rainbow color\n");
+	r=(r+1)%size;
+	scanf("%s",&cq[r]);
+	cnt++;
+}
+void del()
+{
+	if(cnt==0)
+	{
+		printf("Cq is empty\n");
+		return;
+	}
+	printf("The deleted Rainbow color is %c",cq[f]);
+	f=(f+1)%size;
+	cnt--;
+}
+void cq_display()
+{
+	int i,k=f;
+	if(cnt==0)
+	{
+		printf("Cq is empty\n");
+		return;
+	}
+	printf("\n Cq Rainbow color are\n");
+	for(i=0;i<cnt;i++)
+	{
+		printf("%c",cq[k]);
+		k=(k+1)%size;
 	}
 }
-void pop(){
-	if(count==0){
-		printf("\n The queue is empty.");
-	}
-	else{
-	printf("\n The delete element is %c",cirq[f]);
-	f=(f+1)%n;
-	count--;
-	}
-}
-void display(){
-    int y=f;
-	if(count==0){
-	printf("\nThe queue is empty");
-		}
-		else{
-		printf("\n The queue elements are:\t");
-		for(i=0;i<count;i++){
-		    printf("%c\t",cirq[y]);
-		    y=(y+1)%n;
-		}
-	}
-}
-int main(){
+int main()
+{
 	int ch;
-	while(1){
-		printf("\n Enter the choice(1,2,3,4)\n 1.push()\t 2.pop()\t 3.display \t 4.exit()\n");
+	while(1)
+	{
+		printf("\n1.Cq_insert\n 2.cq_delete\n 3.cq_display\n 4.exit\n");
+		printf("Enter the choice\n");
 		scanf("%d",&ch);
-		switch(ch){
-			case 1:push();
-			break;
-			case 2:pop();
-			    break;
-			case 3:
-				display();
+		switch(ch)
+		{
+			case 1:
+				cq_insert();
 				break;
-			case 4:exit(0);
-			break;
-			default:printf("\nInvalid choice");
-		} 
+			case 2:
+				del();
+				break;
+			case 3:	
+				cq_display();
+				break;
+			case 4:
+				exit(0);
+				break;
+			default:
+				printf("Invalid input");
+		}
 	}
-			return(0);
-
+	return 0;
 }
