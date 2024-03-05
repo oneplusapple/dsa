@@ -1,51 +1,87 @@
 #include<stdio.h>
-#define MAX (20)
-int top=-1;
-int stack[MAX];
-int push(char str){
-	if(top==MAX-1){
-		printf("\nStack Overflow");
-		return(0);
-	}
-	else{
-		return(stack[++top]=str);
-	}
-}
-int pop(){
-	if(top==-1){
-		printf("\nStack Underflow");
-		return -1;
-	}
-	return(stack[top--]);
-}
-int palindrome(char str[])
+#include<stdlib.h>
+#define max 4
+int a[10],top=-1;
+void push(int m)
 {
-	int mid,i,len;
-	len=strlen(str);
-	mid=len/2;
-	for(i=0;i<mid;i++)
-	{
-		push(str[i]);
-	}
-	if(strlen(str)%2!=0)
-		i++;
-	while(str[i]!='\0'){
-		if(str[i]==pop())
-			i++;
-		else 
-			return(0);
-	}
-	return 1;
-}
-int main(){
-	int p;
-	char str[50];
-	printf("Enter the string to check whether it is palindrome or not:");
-	scanf("%s",&str);
-	p=palindrome(str);
-	if(p)
-		printf("Given String is palindrome");
+	if(top==max-1)
+		printf("\n Stack overflow");
 	else
-		printf("Given String is not a palindrome");
-	return(0);
+		a[++top]=m;
+}
+int pop()
+{
+	if(top==-1)
+		printf("\n Stack underflow");
+	else
+		return a[top--];
+}
+void display()
+{
+	int i;
+	if(top==-1)
+		printf("\n Stack is empty");
+	else
+	{
+		printf("\n The elements are");
+		for(i=top;i>=0;i--)
+			printf("%d\t",a[i]);
+	}
+}
+void palin()
+{
+	int n,num,rem=0,flag=1;
+	printf("\n Enter n");
+	scanf("%d",&n);
+	num=n;
+	while(n!=0)
+	{
+		rem=n%10;
+		push(rem);
+		n=n/10;
+	}
+	while(num!=0)	
+	{
+		if(num%10!=pop())
+		{
+			flag=0;
+			break;
+		}
+		num=n/10;
+	}
+	if(flag==0)
+		printf("\n It is not a palindrome");
+	else
+		printf("\n It is a palindrome");
+}
+int main()
+{
+	int ch,m;
+	while(1)
+	{ 
+		printf("\n 1 push\n 2 pop\n 3 display\n 4 palindrome\n");
+		printf("Enter the choice:");
+		scanf("%d",&ch);
+		switch(ch)
+		{
+			case 1:
+				printf("\n Enter an element\t");
+				scanf("%d",&m);
+				push(m);
+				break;
+			case 2:
+				printf("\n The popped elementis %d", pop());
+				break;
+			case 3: 
+				display();
+				break;
+			case 4:
+				palin();
+				break;
+			default:
+			 	exit(0);
+				break;
+		}
+	}
+	return 0;
 }
