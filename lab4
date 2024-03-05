@@ -1,76 +1,68 @@
 #include<stdio.h>
+#include<stdlib.h>
+#include<math.h>
 #include<string.h>
-#define MAX 100
-int stack[MAX];
+#include<ctype.h>
+#define MAX_SIZE 20
 int top=-1;
-
-void push(char postfix)
+float stack[MAX_SIZE];
+void Push(float s)
 {
-	if(top==MAX-1)
-	{
-		printf("Stack overflow \n");
-		return;
-	}
-	stack[++top]=postfix;
+	stack[++top]=s;
 }
-int pop(){
-	if(top==-1)
-	{
-		printf("stack underflow \n");
-	    return 0;
-	}
-	return(stack[top--]);
-}
-int eval_postfix(char postfix[])
+float POP()
 {
-	int i=0;
-	int op1,op2,result;
-	while(postfix[i] !='\0')
+	return stack[top--];
+}
+float Eval_postfix(char postfix[])
+{
+	float op1,op2;
+	char s;
+	for(int i=0;i<strlen(postfix);i++)
 	{
-		if(isdigit(postfix[i]))
+		s=postfix[i];
+		if(isalpha(s))
 		{
-			push(postfix[i]-'0');
+			float value;
+			printf("Enter the value of %c:",s);
+			scanf("%f",&value);
+			Push(value);
 		}
-		else{
-			op2=pop();
-			op1=pop();
-			switch(postfix[i])
+		else
+		{
+			op2=POP();
+			op1=POP();
+			switch(s)
 			{
 				case'+':
-					result=op1+op2;
+					Push(op1+op2);
 					break;
 				case'-':
-					result=op1-op2;
+					Push(op1-op2);
 					break;
 				case'*':
-					result=op1*op2;
+					Push(op1*op2);
 					break;
 				case'/':
-					if(op2!=0)
-					{
-						result=op1/op2;
-					}
-					else
-					{
-						printf("Divison by zero\n");
-						exit(0);
-					}
+					Push(op1/op2);
 					break;
-					default:
-						printf("Invalid postfix expression \n");
-						exit(0);
+				case'%':
+					Push((int)op1%(int)op2);
+					break;
+				case'^':
+					Push(pow(op1,op2));
+					break;
+				default:
+					printf("Invalid operation");
 			}
-			push(result);
 		}
-		i++;
 	}
-	return pop();
+	return POP();
 }
-int main(){
-	char postfix[100];
-	printf("Enter a postfix expression");
-	scanf("%s",postfix);
-	int result=eval_postfix(postfix);
-	printf("Result of the postfix expression %d\n",result);
-	return 0;
+int main()
+{
+	char postfix[MAX_SIZE];
+	printf("Enter the valid postfix expression:\n");
+	gets(postfix);
+	printf("Result is %.2f\n",Eval_postfix(postfix));
 }
